@@ -1,16 +1,25 @@
-import React, { memo } from 'react'
-import { useRoutes } from 'react-router-dom'
+import React, { memo, Suspense, useEffect } from 'react'
+import { useLocation, useRoutes } from 'react-router-dom'
 import routes from './router'
+import AppHeader from './components/app-header'
+import AppFooter from './components/app-footer'
 
 
 const App = memo(() => {
+  const location = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   return (
     <div className='app'>
-      <div className="hearder">header</div>
-      <div className="page">
-        {useRoutes(routes)}
-      </div>
-      <div className="footer">footer</div>
+      <AppHeader/>
+      <Suspense fallback="loading">
+        <div className="page">
+          {useRoutes(routes)}
+        </div>
+      </Suspense>
+      <AppFooter/>
     </div>
   )
 })

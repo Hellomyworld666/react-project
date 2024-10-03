@@ -8,6 +8,14 @@ module.exports = {
   plugins: [
     {
       plugin: CracoLessPlugin,
+      options: {
+        lessLoaderOptions: {
+          lessOptions: {
+            modifyVars: { '@primary-color': '#1Da57A'},
+            javascriptEnabled: true,
+          },
+        },
+      },
     },
   ],
   // webpack 
@@ -17,7 +25,6 @@ module.exports = {
       "@": resolve("src"),
       "components": resolve("src/components"),
       "utils": resolve("src/utils")
-
     }
   }
 }

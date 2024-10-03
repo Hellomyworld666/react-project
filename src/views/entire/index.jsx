@@ -1,8 +1,34 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+import { EntireWrapper } from './style'
+import EntireFilter from './c-cpns/entire-filter'
+import EntireRooms from './c-cpns/entire-rooms'
+import EntirePagination from './c-cpns/entire-pagination'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchRoomListAction } from '@/store/modules/entire/actioinCreator'
+import { changeHeaderConfigAction } from '@/store/modules/main'
+
 
 const Entire = memo(() => {
+  const { currentPage, roomList, totalCount } = 
+  useSelector((state) => ({
+    currentPage: state.entire.currentPage,
+    roomList: state.entire.roomList,
+    totalCount: state.entire.totalCount,
+
+  }))
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchRoomListAction())
+    dispatch(changeHeaderConfigAction({ isFixed: true, topAlpha: false }))
+  }, [dispatch])
+
   return (
-    <div>Entire</div>
+    <EntireWrapper>
+      <EntireFilter/>
+      <EntireRooms/>
+      <EntirePagination/>
+    </EntireWrapper>
   )
 })
 
